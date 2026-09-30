@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nova Rise Academy - Dashboard</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f7fb;
+      color: #172033;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #0757d5, #168cff);
+      color: white;
+      padding: 22px 18px;
+      border-radius: 0 0 25px 25px;
+    }
+
+    .header h1 {
+      font-size: 25px;
+      margin-bottom: 6px;
+    }
+
+    .header p {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 18px;
+    }
+
+    .welcome {
+      background: white;
+      padding: 18px;
+      border-radius: 16px;
+      margin-bottom: 18px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+    }
+
+    .welcome h2 {
+      font-size: 20px;
+      margin-bottom: 6px;
+    }
+
+    .plan {
+      color: #0757d5;
+      font-weight: bold;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 18px 12px;
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+    }
+
+    .card h3 {
+      font-size: 14px;
+      color: #667085;
+      margin-bottom: 10px;
+    }
+
+    .amount {
+      font-size: 22px;
+      font-weight: bold;
+      color: #0757d5;
+    }
+
+    .section {
+      background: white;
+      padding: 20px;
+      border-radius: 16px;
+      margin-bottom: 18px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+    }
+
+    .section h2 {
+      font-size: 19px;
+      margin-bottom: 15px;
+    }
+
+    .info {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #eee;
+      font-size: 15px;
+    }
+
+    .info:last-child {
+      border-bottom: none;
+    }
+
+    .referral {
+      background: #eef6ff;
+      padding: 15px;
+      border-radius: 12px;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .referral-code {
+      font-size: 20px;
+      font-weight: bold;
+      color: #0757d5;
+      margin: 8px 0;
+    }
+
+    .copy-btn,
+    .logout-btn {
+      border: none;
+      padding: 11px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .copy-btn {
+      background: #0757d5;
+      color: white;
+    }
+
+    .logout-btn {
+      width: 100%;
+      background: #ef4444;
+      color: white;
+      font-size: 16px;
+    }
+
+    .footer {
+      text-align: center;
+      color: #777;
+      font-size: 13px;
+      padding: 15px;
+    }
+
+    @media (max-width: 600px) {
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        text-align: left;
+      }
+
+      .amount {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+    <h1>Nova Rise Academy</h1>
+    <p>Member Dashboard</p>
+  </div>
+
+  <div class="container">
+
+    <div class="welcome">
+      <h2>Welcome, <span id="memberName">Member</span> 👋</h2>
+      <p>Your Plan: <span class="plan" id="memberPlan">Basic</span></p>
+    </div>
+
+    <div class="cards">
+
+      <div class="card">
+        <h3>Today's Earnings</h3>
+        <div class="amount">₹0</div>
+      </div>
+
+      <div class="card">
+        <h3>7 Days Earnings</h3>
+        <div class="amount">₹0</div>
+      </div>
+
+      <div class="card">
+        <h3>30 Days Earnings</h3>
+        <div class="amount">₹0</div>
+      </div>
+
+    </div>
+
+    <div class="section">
+      <h2>My Account</h2>
+
+      <div class="info">
+        <span>Name</span>
+        <strong id="accountName">Member</strong>
+      </div>
+
+      <div class="info">
+        <span>Email</span>
+        <strong id="accountEmail">Not available</strong>
+      </div>
+
+      <div class="info">
+        <span>Mobile</span>
+        <strong id="accountMobile">Not available</strong>
+      </div>
+
+      <div class="info">
+        <span>Membership</span>
+        <strong id="accountPlan">Basic</strong>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Referral</h2>
+
+      <div class="referral">
+        <p>Your Referral Code</p>
+
+        <div class="referral-code" id="referralCode">
+          NOVA001
+        </div>
+
+        <button class="copy-btn" onclick="copyReferral()">
+          Copy Referral Code
+        </button>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Account Status</h2>
+
+      <div class="info">
+        <span>Status</span>
+        <strong style="color:green;">Active</strong>
+      </div>
+
+      <div class="info">
+        <span>Payment Status</span>
+        <strong style="color:green;">Verified</strong>
+      </div>
+    </div>
+
+    <button class="logout-btn" onclick="logout()">
+      Logout
+    </button>
+
+    <div class="footer">
+      © 2026 Nova Rise Academy
+    </div>
+
+  </div>
+
+  <script>
+
+    const savedName = localStorage.getItem("memberName");
+    const savedEmail = localStorage.getItem("memberEmail");
+    const savedMobile = localStorage.getItem("memberMobile");
+    const savedPlan = localStorage.getItem("memberPlan");
+    const savedReferral = localStorage.getItem("referralCode");
+
+    if (savedName) {
+      document.getElementById("memberName").textContent = savedName;
+      document.getElementById("accountName").textContent = savedName;
+    }
+
+    if (savedEmail) {
+      document.getElementById("accountEmail").textContent = savedEmail;
+    }
+
+    if (savedMobile) {
+      document.getElementById("accountMobile").textContent = savedMobile;
+    }
+
+    if (savedPlan) {
+      document.getElementById("memberPlan").textContent = savedPlan;
+      document.getElementById("accountPlan").textContent = savedPlan;
+    }
+
+    if (savedReferral) {
+      document.getElementById("referralCode").textContent = savedReferral;
+    }
+
+    function copyReferral() {
+      const code = document.getElementById("referralCode").textContent;
+
+      navigator.clipboard.writeText(code);
+
+      alert("Referral code copied!");
+    }
+
+    function logout() {
+      localStorage.clear();
+      window.location.href = "login.html";
+    }
+
+  </script>
+
+</body>
+</html>
+
