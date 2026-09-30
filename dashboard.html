@@ -475,7 +475,17 @@
           "Basic";
 
 
-        const referral = metadata.referral_code || "";
+       const { data: profile, error: profileError } = await supabaseClient
+    .from("profiles")
+    .select("referral_code")
+    .eq("id", user.id)
+    .single();
+
+if (profileError) {
+    console.error("Referral code error:", profileError);
+}
+
+const referral = profile?.referral_code || "Loading..."; 
 
 
         /* =====================================
