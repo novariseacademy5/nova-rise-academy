@@ -276,7 +276,24 @@
               "Login could not be completed."
             );
           }
+const { data: profile, error: profileError } =
+  await supabaseClient
+    .from("profiles")
+    .select("account_status")
+    .eq("id", data.user.id)
+    .single();
 
+if (profileError) {
+  throw new Error("Account status check failed.");
+}
+
+if (profile.account_status !== "approved") {
+  await supabaseClient.auth.signOut();
+
+  throw new Error(
+    "Your payment is pending approval. Please wait for admin approval."
+  );
+}
 
           showMessage(
             "Login successful. Opening your account...",
