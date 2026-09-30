@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Login - Nova Rise Academy</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #eef6ff, #ffffff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      color: #172033;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 430px;
+    }
+
+    .logo {
+      text-align: center;
+      color: #1677ff;
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #667085;
+      margin-bottom: 25px;
+    }
+
+    .card {
+      background: white;
+      padding: 28px;
+      border-radius: 18px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin: 15px 0 7px;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #d6dce5;
+      border-radius: 10px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #1677ff;
+    }
+
+    button {
+      width: 100%;
+      border: none;
+      background: #1677ff;
+      color: white;
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 22px;
+    }
+
+    button:hover {
+      background: #075dcc;
+    }
+
+    button:disabled {
+      background: #9bbff0;
+      cursor: not-allowed;
+    }
+
+    .message {
+      display: none;
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 9px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .error {
+      background: #ffe8e8;
+      color: #b42318;
+    }
+
+    .success {
+      background: #e7f8ee;
+      color: #087443;
+    }
+
+    .register {
+      text-align: center;
+      margin-top: 20px;
+      color: #667085;
+    }
+
+    .register a {
+      color: #1677ff;
+      font-weight: 700;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="logo">NOVA RISE ACADEMY</div>
+
+    <div class="subtitle">
+      Member Login
+    </div>
+
+    <div class="card">
+
+      <h2>Welcome Back</h2>
+
+      <form id="loginForm">
+
+        <label>Email / Gmail</label>
+
+        <input
+          type="email"
+          id="email"
+          placeholder="Enter your Gmail"
+          required
+        >
+
+        <label>Password</label>
+
+        <input
+          type="password"
+          id="password"
+          placeholder="Enter your password"
+          required
+        >
+
+        <button type="submit" id="loginBtn">
+          Login
+        </button>
+
+        <div id="message" class="message"></div>
+
+      </form>
+
+      <div class="register">
+        Don't have an account?
+        <a href="register.html">Create Account</a>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <script>
+
+    /* =========================================
+       SUPABASE CONFIG
+       ========================================= */
+
+    const SUPABASE_URL =
+      https://scdkjcckoxerwjsvjxxu.supabase.co
+
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_w3RCkBMXOYEQ7vhe7fKB0A_E3V1KDEi"
+
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+      );
+
+
+    /* =========================================
+       LOGIN
+       ========================================= */
+
+    const loginForm =
+      document.getElementById("loginForm");
+
+    const loginBtn =
+      document.getElementById("loginBtn");
+
+    const message =
+      document.getElementById("message");
+
+
+    function showMessage(text, type) {
+
+      message.textContent = text;
+
+      message.className =
+        "message " + type;
+
+      message.style.display = "block";
+
+    }
+
+
+    loginForm.addEventListener(
+      "submit",
+      async function(event) {
+
+        event.preventDefault();
+
+        message.style.display = "none";
+
+        const email =
+          document.getElementById("email")
+            .value
+            .trim()
+            .toLowerCase();
+
+        const password =
+          document.getElementById("password")
+            .value;
+
+
+        loginBtn.disabled = true;
+        loginBtn.textContent = "Logging in...";
+
+
+        try {
+
+          const { data, error } =
+            await supabaseClient.auth
+              .signInWithPassword({
+
+                email: email,
+
+                password: password
+
+              });
+
+
+          if (error) {
+            throw error;
+          }
+
+
+          if (!data.user) {
+            throw new Error(
+              "Login could not be completed."
+            );
+          }
+
+
+          showMessage(
+            "Login successful. Opening your account...",
+            "success"
+          );
+
+
+          setTimeout(function() {
+
+            window.location.href =
+              "pending.html";
+
+          }, 1200);
+
+
+        } catch (error) {
+
+          console.error(error);
+
+          let errorText =
+            error.message ||
+            "Login failed. Please try again.";
+
+
+          if (
+            error.message &&
+            error.message
+              .toLowerCase()
+              .includes("email not confirmed")
+          ) {
+
+            errorText =
+              "Please verify your email before logging in.";
+
+          }
+
+
+          showMessage(
+            errorText,
+            "error"
+          );
+
+
+          loginBtn.disabled = false;
+
+          loginBtn.textContent =
+            "Login";
+
+        }
+
+      }
+    );
+
+  </script>
+
+</body>
+</html>
