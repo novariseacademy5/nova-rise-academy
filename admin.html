@@ -1,147 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Admin Panel - Nova Rise Academy</title>
+<title>Admin Panel - Nova Rise Academy</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
 
-    body {
-      background: #f3f7fc;
-      color: #172033;
-      padding: 20px;
-    }
+body {
+  background: #f3f7fc;
+  color: #172033;
+  padding: 20px;
+}
 
-    .container {
-      max-width: 1100px;
-      margin: auto;
-    }
+.container {
+  max-width: 1100px;
+  margin: auto;
+}
 
-    .header {
-      background: white;
-      padding: 20px;
-      border-radius: 15px;
-      margin-bottom: 20px;
-      box-shadow: 0 5px 20px rgba(0,0,0,.07);
-    }
+.header {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 5px 20px rgba(0,0,0,.07);
+}
 
-    .header h1 {
-      color: #1677ff;
-      margin-bottom: 5px;
-    }
+.header h1 {
+  color: #1677ff;
+  margin-bottom: 5px;
+}
 
-    .header p {
-      color: #667085;
-    }
+.header p {
+  color: #667085;
+}
 
-    .message {
-      display: none;
-      padding: 12px;
-      border-radius: 9px;
-      margin-bottom: 15px;
-    }
+.message {
+  display: none;
+  padding: 12px;
+  border-radius: 9px;
+  margin-bottom: 15px;
+}
 
-    .success {
-      display: block;
-      background: #e7f8ee;
-      color: #087443;
-    }
+.success {
+  display: block;
+  background: #e7f8ee;
+  color: #087443;
+}
 
-    .error {
-      display: block;
-      background: #ffe8e8;
-      color: #b42318;
-    }
+.error {
+  display: block;
+  background: #ffe8e8;
+  color: #b42318;
+}
 
-    .payment {
-      background: white;
-      border-radius: 15px;
-      padding: 20px;
-      margin-bottom: 18px;
-      box-shadow: 0 5px 20px rgba(0,0,0,.07);
-    }
+.payment {
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 18px;
+  box-shadow: 0 5px 20px rgba(0,0,0,.07);
+}
 
-    .payment h3 {
-      color: #1677ff;
-      margin-bottom: 12px;
-    }
+.payment h3 {
+  color: #1677ff;
+  margin-bottom: 12px;
+}
 
-    .row {
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      padding: 8px 0;
-      border-bottom: 1px solid #edf0f4;
-    }
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 8px 0;
+  border-bottom: 1px solid #edf0f4;
+}
 
-    .label {
-      font-weight: 700;
-    }
+.label {
+  font-weight: 700;
+}
 
-    .screenshot {
-      max-width: 300px;
-      width: 100%;
-      margin-top: 15px;
-      border-radius: 10px;
-      border: 1px solid #ddd;
-    }
+.screenshot {
+  max-width: 320px;
+  width: 100%;
+  margin-top: 15px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
 
-    .buttons {
-      display: flex;
-      gap: 10px;
-      margin-top: 18px;
-    }
+.buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
 
-    button {
-      border: 0;
-      padding: 12px 22px;
-      border-radius: 9px;
-      color: white;
-      font-weight: 700;
-      cursor: pointer;
-    }
+button {
+  border: 0;
+  padding: 12px 22px;
+  border-radius: 9px;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
 
-    .approve {
-      background: #16834a;
-    }
+.approve {
+  background: #16834a;
+}
 
-    .reject {
-      background: #c62828;
-    }
+.reject {
+  background: #c62828;
+}
 
-    .empty {
-      background: white;
-      padding: 30px;
-      text-align: center;
-      border-radius: 15px;
-      color: #667085;
-    }
+.empty {
+  background: white;
+  padding: 30px;
+  text-align: center;
+  border-radius: 15px;
+  color: #667085;
+}
 
-    @media(max-width:600px) {
-      .row {
-        flex-direction: column;
-        gap: 3px;
-      }
+@media(max-width:600px) {
 
-      .buttons {
-        flex-direction: column;
-      }
+  .row {
+    flex-direction: column;
+    gap: 3px;
+  }
 
-      button {
-        width: 100%;
-      }
-    }
-  </style>
+  .buttons {
+    flex-direction: column;
+  }
+
+  button {
+    width: 100%;
+  }
+
+}
+</style>
 </head>
 
 <body>
@@ -166,41 +168,35 @@
 <script>
 
 const SUPABASE_URL =
-  "https://scdkjcckoxerwjsvjxxu.supabase.co";
+"https://scdkjcckoxerwjsvjxxu.supabase.co";
 
 const SUPABASE_PUBLISHABLE_KEY =
-  "sb_publishable_w3RCkBMXOYEQ7vhe7fKB0A_E3V1KDEi";
+"sb_publishable_w3RCkBMXOYEQ7vhe7fKB0A_E3V1KDEi";
 
 const supabaseClient =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
-  );
+window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
 
 const paymentsBox =
-  document.getElementById("payments");
+document.getElementById("payments");
 
 const message =
-  document.getElementById("message");
+document.getElementById("message");
 
 
 function showMessage(text, type) {
 
   message.textContent = text;
   message.className = "message " + type;
-
-  setTimeout(() => {
-    message.className = "message";
-    message.textContent = "";
-  }, 4000);
-
 }
 
 
 async function loadPayments() {
 
   paymentsBox.innerHTML =
-    '<div class="empty">Loading...</div>';
+  '<div class="empty">Loading...</div>';
 
   const {
     data: { user },
@@ -210,7 +206,7 @@ async function loadPayments() {
   if (authError || !user) {
 
     paymentsBox.innerHTML =
-      '<div class="empty">Please login first.</div>';
+    '<div class="empty">Please login first.</div>';
 
     return;
   }
@@ -220,7 +216,7 @@ async function loadPayments() {
     data,
     error
   } = await supabaseClient
-    .from("payment_submissions")
+    .from("payments")
     .select("*")
     .eq("status", "pending")
     .order("created_at", {
@@ -233,7 +229,7 @@ async function loadPayments() {
     console.error(error);
 
     paymentsBox.innerHTML =
-      '<div class="empty">Unable to load payment requests. Check RLS policies.</div>';
+    '<div class="empty">Unable to load payments. Check RLS policies.</div>';
 
     return;
   }
@@ -242,7 +238,7 @@ async function loadPayments() {
   if (!data || data.length === 0) {
 
     paymentsBox.innerHTML =
-      '<div class="empty">No pending payment requests.</div>';
+    '<div class="empty">No pending payment requests.</div>';
 
     return;
   }
@@ -254,19 +250,46 @@ async function loadPayments() {
   data.forEach(payment => {
 
     const card =
-      document.createElement("div");
+    document.createElement("div");
 
     card.className = "payment";
 
 
     const plan =
-      payment.plan ||
-      payment.membership_plan ||
-      "N/A";
+    payment.membership_plan || "N/A";
 
 
     const amount =
-      payment.amount || 0;
+    payment.amount || 0;
+
+
+    let screenshotHTML =
+    '<p style="margin-top:12px;color:#667085;">No screenshot available.</p>';
+
+
+    if (payment.screenshot_path) {
+
+      const {
+        data: publicData
+      } = supabaseClient.storage
+        .from("payment-screenshots")
+        .getPublicUrl(payment.screenshot_path);
+
+
+      if (publicData && publicData.publicUrl) {
+
+        screenshotHTML =
+        `
+        <img
+          src="${publicData.publicUrl}"
+          class="screenshot"
+          alt="Payment Screenshot"
+        >
+        `;
+
+      }
+
+    }
 
 
     card.innerHTML = `
@@ -279,7 +302,7 @@ async function loadPayments() {
       </div>
 
       <div class="row">
-        <span class="label">Plan</span>
+        <span class="label">Membership</span>
         <span>${plan}</span>
       </div>
 
@@ -298,21 +321,7 @@ async function loadPayments() {
         <span>${payment.status || "pending"}</span>
       </div>
 
-      <div>
-        ${
-          payment.screenshot_url
-          ?
-          `<img
-             src="${payment.screenshot_url}"
-             class="screenshot"
-             alt="Payment Screenshot"
-           >`
-          :
-          `<p style="margin-top:12px;color:#667085;">
-             Screenshot path available nahi hai.
-           </p>`
-        }
-      </div>
+      ${screenshotHTML}
 
       <div class="buttons">
 
@@ -329,6 +338,7 @@ async function loadPayments() {
         </button>
 
       </div>
+
     `;
 
 
@@ -342,11 +352,12 @@ async function loadPayments() {
 async function updatePayment(id, newStatus) {
 
   const confirmAction =
-    confirm(
-      "Payment ko " +
-      newStatus.toUpperCase() +
-      " karna hai?"
-    );
+  confirm(
+    "Payment ko " +
+    newStatus.toUpperCase() +
+    " karna hai?"
+  );
+
 
   if (!confirmAction) return;
 
@@ -354,7 +365,7 @@ async function updatePayment(id, newStatus) {
   const {
     error
   } = await supabaseClient
-    .from("payment_submissions")
+    .from("payments")
     .update({
       status: newStatus
     })
