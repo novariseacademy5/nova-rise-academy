@@ -1,125 +1,204 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nova Rise Academy</title>
 
-    <title>Nova Rise Academy</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+    body {
+      background: #f4f8ff;
+      color: #172033;
+    }
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #f5f9ff;
-            color: #172033;
-        }
+    header {
+      background: linear-gradient(135deg, #0757d5, #168cff);
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
 
-        header {
-            background: #ffffff;
-            padding: 18px 7%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-        }
+    header h1 {
+      font-size: 28px;
+    }
 
-        .logo {
-            font-size: 22px;
-            font-weight: 700;
-            color: #1769e0;
-        }
+    header p {
+      margin-top: 6px;
+      font-size: 14px;
+    }
 
-        .hero {
-            min-height: 75vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 50px 20px;
-        }
+    .hero {
+      padding: 55px 20px;
+      text-align: center;
+      background: white;
+    }
 
-        .hero-content {
-            max-width: 700px;
-        }
+    .hero h2 {
+      font-size: 32px;
+      color: #0757d5;
+      margin-bottom: 15px;
+    }
 
-        h1 {
-            font-size: 46px;
-            margin-bottom: 18px;
-        }
+    .hero p {
+      max-width: 600px;
+      margin: auto;
+      line-height: 1.6;
+      color: #555;
+    }
 
-        .hero p {
-            font-size: 18px;
-            line-height: 1.6;
-            color: #596579;
-            margin-bottom: 30px;
-        }
+    .buttons {
+      margin-top: 25px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
 
-        .btn {
-            display: inline-block;
-            background: #1769e0;
-            color: white;
-            text-decoration: none;
-            padding: 14px 28px;
-            border-radius: 8px;
-            font-weight: 600;
-        }
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      padding: 13px 24px;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 16px;
+    }
 
-        .btn:hover {
-            background: #0e55bd;
-        }
+    .primary {
+      background: #0757d5;
+      color: white;
+    }
 
-        footer {
-            text-align: center;
-            padding: 25px;
-            background: white;
-            color: #687386;
-        }
+    .secondary {
+      background: white;
+      color: #0757d5;
+      border: 2px solid #0757d5;
+    }
 
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 34px;
-            }
+    .section {
+      max-width: 900px;
+      margin: auto;
+      padding: 35px 20px;
+    }
 
-            .hero p {
-                font-size: 16px;
-            }
+    .section h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #0757d5;
+    }
 
-            header {
-                padding: 16px 5%;
-            }
-        }
-    </style>
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+
+    .card {
+      background: white;
+      padding: 25px 15px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+      color: #0757d5;
+    }
+
+    .card p {
+      color: #666;
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    footer {
+      background: #172033;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 20px;
+      font-size: 13px;
+    }
+
+    @media (max-width: 650px) {
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h2 {
+        font-size: 26px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<header>
-    <div class="logo">NOVA RISE ACADEMY</div>
-</header>
+  <header>
+    <h1>Nova Rise Academy</h1>
+    <p>Skills • Freelancing • Digital Work</p>
+  </header>
 
-<section class="hero">
-    <div class="hero-content">
+  <section class="hero">
+    <h2>Build Your Digital Skills</h2>
 
-        <h1>Build Skills. Build Your Future.</h1>
+    <p>
+      Learn digital skills, explore freelancing opportunities
+      and work on practical projects with Nova Rise Academy.
+    </p>
 
+    <div class="buttons">
+      <a href="register.html" class="btn primary">
+        Create Account
+      </a>
+
+      <a href="login.html" class="btn secondary">
+        Member Login
+      </a>
+    </div>
+  </section>
+
+  <section class="section">
+
+    <h2>What We Offer</h2>
+
+    <div class="cards">
+
+      <div class="card">
+        <h3>Skill Training</h3>
         <p>
-            Welcome to Nova Rise Academy.
-            Learn digital skills, work on projects and build your professional journey.
+          Learn practical digital skills and improve your knowledge.
         </p>
+      </div>
 
-        <a href="#" class="btn">Create Account</a>
+      <div class="card">
+        <h3>Freelancing</h3>
+        <p>
+          Learn about freelancing and practical project-based work.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Digital Work</h3>
+        <p>
+          Explore digital work opportunities and company projects.
+        </p>
+      </div>
 
     </div>
-</section>
 
-<footer>
+  </section>
+
+  <footer>
     © 2026 Nova Rise Academy. All rights reserved.
-</footer>
+  </footer>
 
 </body>
-</html> 
+</html>
