@@ -1,9 +1,12 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nova Rise Academy - Dashboard</title>
+
+  <title>Nova Rise Academy - Member Dashboard</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     * {
@@ -41,12 +44,17 @@
       padding: 18px;
     }
 
-    .welcome {
+    .welcome,
+    .section,
+    .card {
       background: white;
-      padding: 18px;
       border-radius: 16px;
-      margin-bottom: 18px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+    }
+
+    .welcome {
+      padding: 18px;
+      margin-bottom: 18px;
     }
 
     .welcome h2 {
@@ -67,11 +75,8 @@
     }
 
     .card {
-      background: white;
       padding: 18px 12px;
-      border-radius: 16px;
       text-align: center;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.07);
     }
 
     .card h3 {
@@ -87,11 +92,8 @@
     }
 
     .section {
-      background: white;
       padding: 20px;
-      border-radius: 16px;
       margin-bottom: 18px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.07);
     }
 
     .section h2 {
@@ -102,6 +104,7 @@
     .info {
       display: flex;
       justify-content: space-between;
+      gap: 15px;
       padding: 12px 0;
       border-bottom: 1px solid #eee;
       font-size: 15px;
@@ -111,12 +114,16 @@
       border-bottom: none;
     }
 
+    .info strong {
+      text-align: right;
+      word-break: break-word;
+    }
+
     .referral {
       background: #eef6ff;
       padding: 15px;
       border-radius: 12px;
       text-align: center;
-      margin-top: 10px;
     }
 
     .referral-code {
@@ -145,6 +152,30 @@
       background: #ef4444;
       color: white;
       font-size: 16px;
+      margin-top: 5px;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 30px;
+      color: #667085;
+    }
+
+    .error-box {
+      background: #ffe8e8;
+      color: #b42318;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+      display: none;
+    }
+
+    .status-active {
+      color: #16834a;
+    }
+
+    .status-pending {
+      color: #b54708;
     }
 
     .footer {
@@ -155,6 +186,7 @@
     }
 
     @media (max-width: 600px) {
+
       .cards {
         grid-template-columns: 1fr;
       }
@@ -165,6 +197,15 @@
 
       .amount {
         font-size: 24px;
+      }
+
+      .info {
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .info strong {
+        text-align: left;
       }
     }
   </style>
@@ -179,139 +220,424 @@
 
   <div class="container">
 
-    <div class="welcome">
-      <h2>Welcome, <span id="memberName">Member</span> 👋</h2>
-      <p>Your Plan: <span class="plan" id="memberPlan">Basic</span></p>
+    <div id="errorBox" class="error-box"></div>
+
+    <div id="loadingBox" class="loading">
+      Loading your account...
     </div>
 
-    <div class="cards">
+    <div id="dashboardContent" style="display:none;">
 
-      <div class="card">
-        <h3>Today's Earnings</h3>
-        <div class="amount">₹0</div>
+      <!-- WELCOME -->
+
+      <div class="welcome">
+
+        <h2>
+          Welcome, <span id="memberName">Member</span> 👋
+        </h2>
+
+        <p>
+          Your Plan:
+          <span class="plan" id="memberPlan">
+            Loading...
+          </span>
+        </p>
+
       </div>
 
-      <div class="card">
-        <h3>7 Days Earnings</h3>
-        <div class="amount">₹0</div>
-      </div>
 
-      <div class="card">
-        <h3>30 Days Earnings</h3>
-        <div class="amount">₹0</div>
-      </div>
+      <!-- EARNINGS -->
 
-    </div>
+      <div class="cards">
 
-    <div class="section">
-      <h2>My Account</h2>
-
-      <div class="info">
-        <span>Name</span>
-        <strong id="accountName">Member</strong>
-      </div>
-
-      <div class="info">
-        <span>Email</span>
-        <strong id="accountEmail">Not available</strong>
-      </div>
-
-      <div class="info">
-        <span>Mobile</span>
-        <strong id="accountMobile">Not available</strong>
-      </div>
-
-      <div class="info">
-        <span>Membership</span>
-        <strong id="accountPlan">Basic</strong>
-      </div>
-    </div>
-
-    <div class="section">
-      <h2>Referral</h2>
-
-      <div class="referral">
-        <p>Your Referral Code</p>
-
-        <div class="referral-code" id="referralCode">
-          NOVA001
+        <div class="card">
+          <h3>Today's Earnings</h3>
+          <div class="amount">₹0</div>
         </div>
 
-        <button class="copy-btn" onclick="copyReferral()">
-          Copy Referral Code
-        </button>
-      </div>
-    </div>
+        <div class="card">
+          <h3>7 Days Earnings</h3>
+          <div class="amount">₹0</div>
+        </div>
 
-    <div class="section">
-      <h2>Account Status</h2>
+        <div class="card">
+          <h3>30 Days Earnings</h3>
+          <div class="amount">₹0</div>
+        </div>
 
-      <div class="info">
-        <span>Status</span>
-        <strong style="color:green;">Active</strong>
       </div>
 
-      <div class="info">
-        <span>Payment Status</span>
-        <strong style="color:green;">Verified</strong>
+
+      <!-- MY ACCOUNT -->
+
+      <div class="section">
+
+        <h2>My Account</h2>
+
+        <div class="info">
+          <span>Name</span>
+          <strong id="accountName">Loading...</strong>
+        </div>
+
+        <div class="info">
+          <span>Email</span>
+          <strong id="accountEmail">Loading...</strong>
+        </div>
+
+        <div class="info">
+          <span>Mobile</span>
+          <strong id="accountMobile">Loading...</strong>
+        </div>
+
+        <div class="info">
+          <span>Membership</span>
+          <strong id="accountPlan">Loading...</strong>
+        </div>
+
       </div>
-    </div>
 
-    <button class="logout-btn" onclick="logout()">
-      Logout
-    </button>
 
-    <div class="footer">
-      © 2026 Nova Rise Academy
+      <!-- REFERRAL -->
+
+      <div class="section">
+
+        <h2>Referral</h2>
+
+        <div class="referral">
+
+          <p>Your Referral Code</p>
+
+          <div
+            class="referral-code"
+            id="referralCode">
+            NOVA001
+          </div>
+
+          <button
+            class="copy-btn"
+            onclick="copyReferral()">
+            Copy Referral Code
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- ACCOUNT STATUS -->
+
+      <div class="section">
+
+        <h2>Account Status</h2>
+
+        <div class="info">
+          <span>Login Status</span>
+          <strong class="status-active">
+            Logged In
+          </strong>
+        </div>
+
+        <div class="info">
+          <span>Payment Status</span>
+          <strong class="status-pending">
+            Verification Required
+          </strong>
+        </div>
+
+      </div>
+
+
+      <!-- LOGOUT -->
+
+      <button
+        class="logout-btn"
+        onclick="logout()">
+        Logout
+      </button>
+
+
+      <div class="footer">
+        © 2026 Nova Rise Academy
+      </div>
+
     </div>
 
   </div>
 
+
   <script>
 
-    const savedName = localStorage.getItem("memberName");
-    const savedEmail = localStorage.getItem("memberEmail");
-    const savedMobile = localStorage.getItem("memberMobile");
-    const savedPlan = localStorage.getItem("memberPlan");
-    const savedReferral = localStorage.getItem("referralCode");
+    /* =========================================
+       SUPABASE CONFIG
+       ========================================= */
 
-    if (savedName) {
-      document.getElementById("memberName").textContent = savedName;
-      document.getElementById("accountName").textContent = savedName;
+    const SUPABASE_URL =
+      "https://scdkjcckoxerwjsvjxxu.supabase.co";
+
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_w3RCkBMXOYEQ7vhe7fKB0A_E3V1KDEi";
+
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+      );
+
+
+    /* =========================================
+       ELEMENTS
+       ========================================= */
+
+    const loadingBox =
+      document.getElementById("loadingBox");
+
+    const dashboardContent =
+      document.getElementById("dashboardContent");
+
+    const errorBox =
+      document.getElementById("errorBox");
+
+
+    /* =========================================
+       SHOW ERROR
+       ========================================= */
+
+    function showError(message) {
+
+      loadingBox.style.display = "none";
+
+      errorBox.textContent = message;
+
+      errorBox.style.display = "block";
+
     }
 
-    if (savedEmail) {
-      document.getElementById("accountEmail").textContent = savedEmail;
+
+    /* =========================================
+       LOAD USER
+       ========================================= */
+
+    async function loadDashboard() {
+
+      try {
+
+        const {
+          data: { user },
+          error
+        } = await supabaseClient.auth.getUser();
+
+
+        if (error) {
+          throw error;
+        }
+
+
+        if (!user) {
+
+          window.location.href =
+            "login.html";
+
+          return;
+
+        }
+
+
+        /* =====================================
+           USER INFORMATION
+           ===================================== */
+
+        const metadata =
+          user.user_metadata || {};
+
+
+        const name =
+          metadata.full_name ||
+          metadata.name ||
+          "Member";
+
+
+        const email =
+          user.email ||
+          "Not available";
+
+
+        const mobile =
+          metadata.mobile ||
+          metadata.phone ||
+          metadata.phone_number ||
+          "Not available";
+
+
+        const plan =
+          metadata.membership_plan ||
+          metadata.plan ||
+          "Basic";
+
+
+        const referral =
+          metadata.referral_code ||
+          localStorage.getItem("referralCode") ||
+          "NOVA001";
+
+
+        /* =====================================
+           DISPLAY USER INFORMATION
+           ===================================== */
+
+        document.getElementById(
+          "memberName"
+        ).textContent = name;
+
+
+        document.getElementById(
+          "accountName"
+        ).textContent = name;
+
+
+        document.getElementById(
+          "accountEmail"
+        ).textContent = email;
+
+
+        document.getElementById(
+          "accountMobile"
+        ).textContent = mobile;
+
+
+        document.getElementById(
+          "memberPlan"
+        ).textContent =
+          String(plan).toUpperCase();
+
+
+        document.getElementById(
+          "accountPlan"
+        ).textContent =
+          String(plan).toUpperCase();
+
+
+        document.getElementById(
+          "referralCode"
+        ).textContent = referral;
+
+
+        /* =====================================
+           SHOW DASHBOARD
+           ===================================== */
+
+        loadingBox.style.display = "none";
+
+        dashboardContent.style.display =
+          "block";
+
+
+      } catch (error) {
+
+        console.error(
+          "Dashboard error:",
+          error
+        );
+
+        showError(
+          "Dashboard load nahi ho saka. Please login again."
+        );
+
+      }
+
     }
 
-    if (savedMobile) {
-      document.getElementById("accountMobile").textContent = savedMobile;
+
+    /* =========================================
+       COPY REFERRAL
+       ========================================= */
+
+    async function copyReferral() {
+
+      const code =
+        document.getElementById(
+          "referralCode"
+        ).textContent;
+
+
+      try {
+
+        await navigator.clipboard.writeText(
+          code
+        );
+
+        alert(
+          "Referral code copied!"
+        );
+
+      } catch (error) {
+
+        alert(
+          "Referral code: " + code
+        );
+
+      }
+
     }
 
-    if (savedPlan) {
-      document.getElementById("memberPlan").textContent = savedPlan;
-      document.getElementById("accountPlan").textContent = savedPlan;
+
+    /* =========================================
+       LOGOUT
+       ========================================= */
+
+    async function logout() {
+
+      const {
+        error
+      } = await supabaseClient.auth.signOut();
+
+
+      if (error) {
+
+        alert(
+          "Logout failed: " +
+          error.message
+        );
+
+        return;
+
+      }
+
+
+      localStorage.removeItem(
+        "memberName"
+      );
+
+      localStorage.removeItem(
+        "memberEmail"
+      );
+
+      localStorage.removeItem(
+        "memberMobile"
+      );
+
+      localStorage.removeItem(
+        "memberPlan"
+      );
+
+      localStorage.removeItem(
+        "referralCode"
+      );
+
+
+      window.location.href =
+        "login.html";
+
     }
 
-    if (savedReferral) {
-      document.getElementById("referralCode").textContent = savedReferral;
-    }
 
-    function copyReferral() {
-      const code = document.getElementById("referralCode").textContent;
+    /* =========================================
+       START
+       ========================================= */
 
-      navigator.clipboard.writeText(code);
-
-      alert("Referral code copied!");
-    }
-
-    function logout() {
-      localStorage.clear();
-      window.location.href = "login.html";
-    }
+    loadDashboard();
 
   </script>
 
 </body>
 </html>
-
