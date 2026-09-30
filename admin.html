@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Admin Panel - Nova Rise Academy</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f3f7fc;
+      color: #172033;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .header {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 20px rgba(0,0,0,.07);
+    }
+
+    .header h1 {
+      color: #1677ff;
+      margin-bottom: 5px;
+    }
+
+    .header p {
+      color: #667085;
+    }
+
+    .message {
+      display: none;
+      padding: 12px;
+      border-radius: 9px;
+      margin-bottom: 15px;
+    }
+
+    .success {
+      display: block;
+      background: #e7f8ee;
+      color: #087443;
+    }
+
+    .error {
+      display: block;
+      background: #ffe8e8;
+      color: #b42318;
+    }
+
+    .payment {
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 5px 20px rgba(0,0,0,.07);
+    }
+
+    .payment h3 {
+      color: #1677ff;
+      margin-bottom: 12px;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 8px 0;
+      border-bottom: 1px solid #edf0f4;
+    }
+
+    .label {
+      font-weight: 700;
+    }
+
+    .screenshot {
+      max-width: 300px;
+      width: 100%;
+      margin-top: 15px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    button {
+      border: 0;
+      padding: 12px 22px;
+      border-radius: 9px;
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .approve {
+      background: #16834a;
+    }
+
+    .reject {
+      background: #c62828;
+    }
+
+    .empty {
+      background: white;
+      padding: 30px;
+      text-align: center;
+      border-radius: 15px;
+      color: #667085;
+    }
+
+    @media(max-width:600px) {
+      .row {
+        flex-direction: column;
+        gap: 3px;
+      }
+
+      .buttons {
+        flex-direction: column;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <h1>NOVA RISE ACADEMY</h1>
+    <p>Admin Payment Verification Panel</p>
+  </div>
+
+  <div id="message" class="message"></div>
+
+  <div id="payments">
+    <div class="empty">
+      Loading payment requests...
+    </div>
+  </div>
+
+</div>
+
+<script>
+
+const SUPABASE_URL =
+  "https://scdkjcckoxerwjsvjxxu.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_w3RCkBMXOYEQ7vhe7fKB0A_E3V1KDEi";
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+
+const paymentsBox =
+  document.getElementById("payments");
+
+const message =
+  document.getElementById("message");
+
+
+function showMessage(text, type) {
+
+  message.textContent = text;
+  message.className = "message " + type;
+
+  setTimeout(() => {
+    message.className = "message";
+    message.textContent = "";
+  }, 4000);
+
+}
+
+
+async function loadPayments() {
+
+  paymentsBox.innerHTML =
+    '<div class="empty">Loading...</div>';
+
+  const {
+    data: { user },
+    error: authError
+  } = await supabaseClient.auth.getUser();
+
+  if (authError || !user) {
+
+    paymentsBox.innerHTML =
+      '<div class="empty">Please login first.</div>';
+
+    return;
+  }
+
+
+  const {
+    data,
+    error
+  } = await supabaseClient
+    .from("payment_submissions")
+    .select("*")
+    .eq("status", "pending")
+    .order("created_at", {
+      ascending: false
+    });
+
+
+  if (error) {
+
+    console.error(error);
+
+    paymentsBox.innerHTML =
+      '<div class="empty">Unable to load payment requests. Check RLS policies.</div>';
+
+    return;
+  }
+
+
+  if (!data || data.length === 0) {
+
+    paymentsBox.innerHTML =
+      '<div class="empty">No pending payment requests.</div>';
+
+    return;
+  }
+
+
+  paymentsBox.innerHTML = "";
+
+
+  data.forEach(payment => {
+
+    const card =
+      document.createElement("div");
+
+    card.className = "payment";
+
+
+    const plan =
+      payment.plan ||
+      payment.membership_plan ||
+      "N/A";
+
+
+    const amount =
+      payment.amount || 0;
+
+
+    card.innerHTML = `
+
+      <h3>Payment Request</h3>
+
+      <div class="row">
+        <span class="label">User ID</span>
+        <span>${payment.user_id || "N/A"}</span>
+      </div>
+
+      <div class="row">
+        <span class="label">Plan</span>
+        <span>${plan}</span>
+      </div>
+
+      <div class="row">
+        <span class="label">Amount</span>
+        <span>₹${amount}</span>
+      </div>
+
+      <div class="row">
+        <span class="label">UTR</span>
+        <span>${payment.utr || "N/A"}</span>
+      </div>
+
+      <div class="row">
+        <span class="label">Status</span>
+        <span>${payment.status || "pending"}</span>
+      </div>
+
+      <div>
+        ${
+          payment.screenshot_url
+          ?
+          `<img
+             src="${payment.screenshot_url}"
+             class="screenshot"
+             alt="Payment Screenshot"
+           >`
+          :
+          `<p style="margin-top:12px;color:#667085;">
+             Screenshot path available nahi hai.
+           </p>`
+        }
+      </div>
+
+      <div class="buttons">
+
+        <button
+          class="approve"
+          onclick="updatePayment('${payment.id}', 'approved')">
+          APPROVE
+        </button>
+
+        <button
+          class="reject"
+          onclick="updatePayment('${payment.id}', 'rejected')">
+          REJECT
+        </button>
+
+      </div>
+    `;
+
+
+    paymentsBox.appendChild(card);
+
+  });
+
+}
+
+
+async function updatePayment(id, newStatus) {
+
+  const confirmAction =
+    confirm(
+      "Payment ko " +
+      newStatus.toUpperCase() +
+      " karna hai?"
+    );
+
+  if (!confirmAction) return;
+
+
+  const {
+    error
+  } = await supabaseClient
+    .from("payment_submissions")
+    .update({
+      status: newStatus
+    })
+    .eq("id", id);
+
+
+  if (error) {
+
+    console.error(error);
+
+    showMessage(
+      "Update failed: " + error.message,
+      "error"
+    );
+
+    return;
+  }
+
+
+  showMessage(
+    "Payment " +
+    newStatus +
+    " successfully.",
+    "success"
+  );
+
+
+  loadPayments();
+
+}
+
+
+loadPayments();
+
+</script>
+
+</body>
+</html>
