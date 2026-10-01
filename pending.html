@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Payment Verification - Nova Rise Academy</title>
+  <title>Payment Pending - Nova Rise Academy</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -19,185 +19,139 @@
     body {
       min-height: 100vh;
       background: linear-gradient(135deg, #eef6ff, #ffffff);
-      padding: 20px 15px;
       color: #172033;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .container {
       width: 100%;
       max-width: 520px;
-      margin: auto;
-    }
-
-    .logo {
-      text-align: center;
-      color: #1677ff;
-      font-size: 26px;
-      font-weight: 800;
-      margin: 10px 0 5px;
-    }
-
-    .subtitle {
-      text-align: center;
-      color: #667085;
-      margin-bottom: 18px;
     }
 
     .card {
       background: white;
-      padding: 22px;
-      border-radius: 18px;
+      padding: 30px 24px;
+      border-radius: 20px;
       box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      text-align: center;
     }
 
-    h2 {
-      text-align: center;
+    .logo {
+      color: #1677ff;
+      font-size: 27px;
+      font-weight: 800;
+      margin-bottom: 25px;
+    }
+
+    .icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      background: #fff4db;
+      color: #b54708;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+    }
+
+    h1 {
+      font-size: 25px;
+      margin-bottom: 12px;
+    }
+
+    .main-text {
+      color: #667085;
+      line-height: 1.6;
+      font-size: 15px;
+      margin-bottom: 25px;
+    }
+
+    .status-box {
+      background: #f8fafc;
+      border: 1px solid #e4e7ec;
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .status-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 10px 0;
+      border-bottom: 1px solid #eaecf0;
+    }
+
+    .status-row:last-child {
+      border-bottom: none;
+    }
+
+    .status-label {
+      color: #667085;
+    }
+
+    .status-value {
+      font-weight: 700;
+      text-align: right;
+    }
+
+    .pending {
+      color: #b54708;
+    }
+
+    .info {
+      background: #eef6ff;
+      color: #344054;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 13px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    button,
+    a {
+      display: block;
+      width: 100%;
+      padding: 13px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .login-btn {
+      background: #1677ff;
+      color: white;
+      border: none;
       margin-bottom: 10px;
     }
 
-    .status {
-      text-align: center;
-      background: #fff4d6;
-      color: #8a5a00;
-      padding: 12px;
-      border-radius: 10px;
-      font-weight: 700;
-      margin-bottom: 18px;
-    }
-
-    /* VERIFICATION INSTRUCTION BOX */
-
-    .instruction-box {
-      background: #eef6ff;
-      border: 1px solid #b9d7ff;
-      border-left: 5px solid #1677ff;
-      padding: 15px;
-      border-radius: 12px;
-      margin-bottom: 20px;
-      line-height: 1.55;
-    }
-
-    .instruction-title {
+    .home-btn {
+      background: white;
       color: #1677ff;
-      font-size: 17px;
-      font-weight: 800;
-      margin-bottom: 8px;
+      border: 2px solid #1677ff;
     }
 
-    .instruction-box p {
-      font-size: 14px;
-      color: #344054;
-      margin-bottom: 7px;
-    }
-
-    .time {
-      font-weight: 800;
-      color: #1677ff;
-    }
-
-    .important {
-      background: #fff8e6;
-      border-radius: 8px;
-      padding: 9px;
-      margin-top: 8px;
-      color: #7a5700 !important;
-      font-weight: 600;
-    }
-
-    .plan-box {
-      background: #f5f9ff;
-      border: 1px solid #dce9ff;
-      border-radius: 12px;
-      padding: 14px;
-      margin-bottom: 18px;
-    }
-
-    .row {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      margin: 7px 0;
-    }
-
-    .amount {
-      color: #1677ff;
-      font-size: 20px;
-      font-weight: 800;
-    }
-
-    .scanner {
-      width: 100%;
-      max-width: 360px;
-      display: block;
-      margin: 10px auto;
-      border-radius: 12px;
-      border: 1px solid #ddd;
-    }
-
-    .upi {
-      text-align: center;
-      font-weight: 700;
-      background: #f2f4f7;
-      padding: 12px;
-      border-radius: 9px;
-      margin: 12px 0;
-      word-break: break-all;
-    }
-
-    .payment-steps {
-      background: #f8fafc;
-      border: 1px solid #e4e7ec;
-      padding: 13px;
-      border-radius: 10px;
-      font-size: 14px;
-      line-height: 1.6;
-      margin-bottom: 18px;
-    }
-
-    label {
-      display: block;
-      font-weight: 700;
-      margin: 15px 0 7px;
-    }
-
-    input[type="text"],
-    input[type="file"] {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #d6dce5;
-      border-radius: 10px;
-      font-size: 15px;
-    }
-
-    input:focus {
-      outline: none;
-      border-color: #1677ff;
-    }
-
-    button {
-      width: 100%;
-      border: none;
-      background: #1677ff;
+    .logout-btn {
+      background: #ef4444;
       color: white;
-      padding: 14px;
-      border-radius: 10px;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      margin-top: 20px;
-    }
-
-    button:disabled {
-      background: #9bbff0;
-      cursor: not-allowed;
+      border: none;
+      margin-top: 10px;
     }
 
     .message {
-      display: none;
-      margin-top: 14px;
+      margin-bottom: 18px;
       padding: 12px;
-      border-radius: 9px;
-      text-align: center;
+      border-radius: 10px;
+      display: none;
       font-size: 14px;
     }
 
@@ -206,517 +160,369 @@
       color: #b42318;
     }
 
-    .success {
-      background: #e7f8ee;
-      color: #087443;
+    .loading {
+      color: #667085;
+      padding: 15px;
     }
 
-    .small {
-      color: #667085;
+    .footer {
+      margin-top: 20px;
+      color: #98a2b3;
       font-size: 12px;
-      margin-top: 7px;
-      line-height: 1.4;
+    }
+
+    @media (max-width: 500px) {
+      body {
+        padding: 12px;
+      }
+
+      .card {
+        padding: 25px 18px;
+      }
+
+      h1 {
+        font-size: 23px;
+      }
+
+      .status-row {
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .status-value {
+        text-align: left;
+      }
     }
   </style>
 </head>
 
 <body>
 
-<div class="container">
+  <div class="container">
 
-  <div class="logo">NOVA RISE ACADEMY</div>
+    <div class="card">
 
-  <div class="subtitle">
-    Membership Payment Verification
-  </div>
-
-  <div class="card">
-
-    <h2>Complete Payment</h2>
-
-    <div class="status">
-      ⏳ Payment Verification Pending
-    </div>
-
-
-    <!-- IMPORTANT VERIFICATION NOTICE -->
-
-    <div class="instruction-box">
-
-      <div class="instruction-title">
-        📢 Important Payment Verification Instruction
+      <div class="logo">
+        NOVA RISE ACADEMY
       </div>
 
-      <p>
-        Aapka payment screenshot submit karne ke baad
-        <strong>payment verification</strong> ki jayegi.
-      </p>
-
-      <p>
-        Payment approval ka verification time:
-        <span class="time">2:00 PM se 4:00 PM</span> tak.
-      </p>
-
-      <p>
-        Kripya is duration mein wait kijiye.
-        Aapka payment screenshot isi verification window
-        ke dauran check kiya jayega.
-      </p>
-
-      <p class="important">
-        ⚠️ Please panic na karein. Agar payment successfully
-        complete ho gaya hai aur screenshot submit kar diya hai,
-        to verification complete hone tak kripya wait kijiye.
-      </p>
-
-    </div>
-
-
-    <!-- PLAN -->
-
-    <div class="plan-box">
-
-      <div class="row">
-        <span>Selected Plan</span>
-        <strong id="planName">Loading...</strong>
+      <div id="loadingBox" class="loading">
+        Checking your account...
       </div>
 
-      <div class="row">
-        <span>Payment Amount</span>
-        <span class="amount" id="amount">₹0</span>
+      <div id="content" style="display:none;">
+
+        <div class="icon">
+          ⏳
+        </div>
+
+        <h1>
+          Verification Pending
+        </h1>
+
+        <p class="main-text">
+          Your account has been created successfully.
+          Your payment/account verification is currently pending.
+        </p>
+
+        <div class="status-box">
+
+          <div class="status-row">
+            <span class="status-label">
+              Name
+            </span>
+
+            <span
+              class="status-value"
+              id="memberName">
+              Loading...
+            </span>
+          </div>
+
+          <div class="status-row">
+            <span class="status-label">
+              Email
+            </span>
+
+            <span
+              class="status-value"
+              id="memberEmail">
+              Loading...
+            </span>
+          </div>
+
+          <div class="status-row">
+            <span class="status-label">
+              Membership
+            </span>
+
+            <span
+              class="status-value"
+              id="memberPlan">
+              Loading...
+            </span>
+          </div>
+
+          <div class="status-row">
+            <span class="status-label">
+              Account Status
+            </span>
+
+            <span
+              class="status-value pending">
+              Pending Verification
+            </span>
+          </div>
+
+        </div>
+
+        <div class="info">
+          Admin payment verification complete hone ke baad
+          aap apne member dashboard mein login kar sakte hain.
+          Approval ke baad dashboard access available hoga.
+        </div>
+
+        <div
+          id="errorBox"
+          class="message error">
+        </div>
+
+        <a
+          href="login.html"
+          class="login-btn">
+          Go to Member Login
+        </a>
+
+        <a
+          href="index.html"
+          class="home-btn">
+          Back to Home
+        </a>
+
+        <button
+          id="logoutBtn"
+          class="logout-btn">
+          Logout
+        </button>
+
+        <div class="footer">
+          © 2026 Nova Rise Academy
+        </div>
+
       </div>
 
     </div>
-
-
-    <!-- QR -->
-
-    <h3 style="text-align:center;margin-bottom:10px;">
-      Scan & Pay
-    </h3>
-
-    <img
-      src="scanner.png"
-      alt="Nova Rise Academy Payment QR"
-      class="scanner"
-    >
-
-    <div class="upi">
-      UPI ID: sidhujashandeep17-1@okaxis
-    </div>
-
-
-    <!-- PAYMENT STEPS -->
-
-    <div class="payment-steps">
-
-      <strong>Payment Steps:</strong><br>
-
-      1. Upar diye gaye QR scanner ko scan karein.<br>
-
-      2. Apne selected membership plan ka exact amount pay karein.<br>
-
-      3. Payment complete hone ke baad payment screenshot lein.<br>
-
-      4. Neeche UTR / Transaction ID enter karein.<br>
-
-      5. Payment screenshot upload karein.<br>
-
-      6. <strong>Submit Payment for Verification</strong> par click karein.<br>
-
-      7. Verification complete hone tak wait karein.
-
-    </div>
-
-
-    <!-- PAYMENT FORM -->
-
-    <form id="paymentForm">
-
-      <label>
-        UTR / Transaction ID
-      </label>
-
-      <input
-        type="text"
-        id="utr"
-        placeholder="Enter UTR / Transaction ID"
-        required
-      >
-
-
-      <label>
-        Payment Screenshot
-      </label>
-
-      <input
-        type="file"
-        id="screenshot"
-        accept="image/png,image/jpeg,image/jpg,image/webp"
-        required
-      >
-
-      <div class="small">
-        Sirf payment ka clear screenshot upload karein.
-        Maximum file size: 5 MB.
-      </div>
-
-
-      <button type="submit" id="submitBtn">
-        Submit Payment for Verification
-      </button>
-
-
-      <div id="message" class="message"></div>
-
-    </form>
 
   </div>
-
-</div>
 
 
 <script>
 
-  /* =========================================
-     SUPABASE CONFIG
-     ========================================= */
+/* =========================================
+   SUPABASE CONFIG
+   ========================================= */
 
-  const SUPABASE_URL =
-    "https://scdkjcckoxerwjsvjxxu.supabase.co";
+const SUPABASE_URL =
+  "https://scdkjcckoxerwjsvjxxu.supabase.co";
 
-  const SUPABASE_PUBLISHABLE_KEY =
-    "sb_publishable_w3RCkBMXOYEQ7vhe7fKB0A_E3V1KDEi";
-
-  const supabaseClient =
-    window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_PUBLISHABLE_KEY
-    );
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_w3RCkBMXOYEQ7vhe7fKB0A_E3V1KDEi";
 
 
-  /* =========================================
-     ELEMENTS
-     ========================================= */
-
-  const planName =
-    document.getElementById("planName");
-
-  const amount =
-    document.getElementById("amount");
-
-  const form =
-    document.getElementById("paymentForm");
-
-  const submitBtn =
-    document.getElementById("submitBtn");
-
-  const message =
-    document.getElementById("message");
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
 
 
-  /* =========================================
-     MESSAGE
-     ========================================= */
+/* =========================================
+   ELEMENTS
+   ========================================= */
 
-  function showMessage(text, type) {
+const loadingBox =
+  document.getElementById("loadingBox");
 
-    message.textContent = text;
+const content =
+  document.getElementById("content");
 
-    message.className =
-      "message " + type;
+const errorBox =
+  document.getElementById("errorBox");
 
-    message.style.display = "block";
+const logoutBtn =
+  document.getElementById("logoutBtn");
 
-  }
+
+/* =========================================
+   SHOW ERROR
+   ========================================= */
+
+function showError(message) {
+
+  loadingBox.style.display = "none";
+
+  errorBox.textContent = message;
+
+  errorBox.style.display = "block";
+
+}
 
 
-  /* =========================================
-     LOAD MEMBER DATA
-     ========================================= */
+/* =========================================
+   LOAD ACCOUNT
+   ========================================= */
 
-  async function loadMemberData() {
+async function loadAccount() {
+
+  try {
 
     const {
       data: { user },
       error
-    } = await supabaseClient.auth.getUser();
+    } =
+      await supabaseClient.auth.getUser();
 
 
-    if (error || !user) {
+    if (error) {
+      throw error;
+    }
 
-      showMessage(
-        "Login session nahi mili. Please pehle login karein.",
-        "error"
-      );
 
-      submitBtn.disabled = true;
+    /* ===============================
+       USER NOT LOGGED IN
+       =============================== */
+
+    if (!user) {
+
+      window.location.href =
+        "login.html";
 
       return;
     }
 
 
-    const userData =
+    /* ===============================
+       USER METADATA
+       =============================== */
+
+    const metadata =
       user.user_metadata || {};
 
 
+    const name =
+      metadata.full_name ||
+      metadata.name ||
+      "Member";
+
+
+    const email =
+      user.email ||
+      "Not available";
+
+
     const plan =
-      userData.membership_plan || "basic";
+      metadata.membership_plan ||
+      metadata.plan ||
+      "Basic";
 
 
-    const prices = {
+    /* ===============================
+       DISPLAY DATA
+       =============================== */
 
-      basic: 349,
-
-      special: 849,
-
-      premium: 1279
-
-    };
+    document.getElementById(
+      "memberName"
+    ).textContent = name;
 
 
-    const names = {
-
-      basic: "BASIC",
-
-      special: "SPECIAL",
-
-      premium: "PREMIUM"
-
-    };
+    document.getElementById(
+      "memberEmail"
+    ).textContent = email;
 
 
-    planName.textContent =
-      names[plan] || plan.toUpperCase();
+    document.getElementById(
+      "memberPlan"
+    ).textContent =
+      String(plan).toUpperCase();
 
 
-    amount.textContent =
-      "₹" + (prices[plan] || 0);
+    /* ===============================
+       SHOW PAGE
+       =============================== */
+
+    loadingBox.style.display =
+      "none";
+
+    content.style.display =
+      "block";
+
+
+  } catch (error) {
+
+    console.error(
+      "Pending page error:",
+      error
+    );
+
+    showError(
+      "Account information load nahi ho saki. Please login again."
+    );
 
   }
 
+}
 
-  loadMemberData();
 
+/* =========================================
+   LOGOUT
+   ========================================= */
 
-  /* =========================================
-     PAYMENT SUBMIT
-     ========================================= */
+logoutBtn.addEventListener(
+  "click",
+  async function() {
 
-  form.addEventListener(
-    "submit",
-    async function(event) {
+    logoutBtn.disabled = true;
 
-      event.preventDefault();
+    logoutBtn.textContent =
+      "Logging out...";
 
 
-      message.style.display = "none";
+    const {
+      error
+    } =
+      await supabaseClient.auth.signOut();
 
 
-      const utr =
-        document.getElementById("utr")
-        .value
-        .trim();
+    if (error) {
 
+      console.error(error);
 
-      const file =
-        document.getElementById("screenshot")
-        .files[0];
+      logoutBtn.disabled = false;
 
+      logoutBtn.textContent =
+        "Logout";
 
-      if (!utr) {
+      alert(
+        "Logout failed: " +
+        error.message
+      );
 
-        showMessage(
-          "Please enter UTR / Transaction ID.",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      if (!file) {
-
-        showMessage(
-          "Please upload payment screenshot.",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      if (file.size > 5 * 1024 * 1024) {
-
-        showMessage(
-          "Screenshot 5 MB se chhota hona chahiye.",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      submitBtn.disabled = true;
-
-      submitBtn.textContent =
-        "Uploading Payment...";
-
-
-      try {
-
-        const {
-          data: { user },
-          error: userError
-        } = await supabaseClient.auth.getUser();
-
-
-        if (userError || !user) {
-
-          throw new Error(
-            "Login session expire ho gayi. Please login again."
-          );
-
-        }
-
-
-        const fileExtension =
-          file.name.split(".").pop();
-
-
-        const fileName =
-          user.id +
-          "_" +
-          Date.now() +
-          "." +
-          fileExtension;
-
-
-        const filePath =
-          user.id + "/" + fileName;
-
-
-        /* =========================================
-           UPLOAD SCREENSHOT
-           ========================================= */
-
-        const {
-          error: uploadError
-        } =
-          await supabaseClient.storage
-          .from("payment-screenshots")
-          .upload(
-            filePath,
-            file,
-            {
-              cacheControl: "3600",
-              upsert: false
-            }
-          );
-
-
-        if (uploadError) {
-
-          throw uploadError;
-
-        }
-
-
-        /* =========================================
-           MEMBER PLAN
-           ========================================= */
-
-        const userData =
-          user.user_metadata || {};
-
-
-        const plan =
-          userData.membership_plan || "basic";
-
-
-        const prices = {
-
-          basic: 349,
-
-          special: 849,
-
-          premium: 1279
-
-        };
-
-
-        /* =========================================
-           PAYMENT RECORD
-           ========================================= */
-
-        const {
-          error: paymentError
-        } =
-          await supabaseClient
-          .from("payments")
-          .insert({
-
-            user_id: user.id,
-
-            membership_plan: plan,
-
-            amount: prices[plan] || 0,
-
-            utr: utr,
-
-            screenshot_path: filePath,
-
-            status: "pending"
-
-          });
-
-
-        if (paymentError) {
-
-          throw paymentError;
-
-        }
-
-
-        /* =========================================
-           SUCCESS
-           ========================================= */
-
-        showMessage(
-          "Payment submitted successfully. Verification 2:00 PM se 4:00 PM ke beech ki jayegi. Kripya wait karein.",
-          "success"
-        );
-
-
-        submitBtn.textContent =
-          "Payment Submitted ✓";
-
-
-      } catch (error) {
-
-        console.error(error);
-
-
-        showMessage(
-          error.message ||
-          "Payment submit nahi ho paya. Please try again.",
-          "error"
-        );
-
-
-        submitBtn.disabled = false;
-
-
-        submitBtn.textContent =
-          "Submit Payment for Verification";
-
-      }
-
+      return;
     }
-  );
+
+
+    window.location.href =
+      "login.html";
+
+  }
+);
+
+
+/* =========================================
+   START
+   ========================================= */
+
+loadAccount();
 
 </script>
 
