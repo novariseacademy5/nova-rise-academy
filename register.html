@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Create Account - Nova Rise Academy</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #eef6ff, #ffffff);
+      padding: 25px 15px;
+      color: #172033;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 520px;
+      margin: auto;
+    }
+
+    .logo {
+      text-align: center;
+      color: #1677ff;
+      font-size: 28px;
+      font-weight: 800;
+      margin: 15px 0 8px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #667085;
+      margin-bottom: 25px;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 18px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin: 15px 0 7px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #d6dce5;
+      border-radius: 10px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    input:focus, select:focus {
+      border-color: #1677ff;
+    }
+
+    .plans {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .plan {
+      border: 2px solid #e1e7ef;
+      border-radius: 12px;
+      padding: 14px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .plan:hover {
+      border-color: #1677ff;
+    }
+
+    .plan input {
+      width: auto;
+      margin-right: 8px;
+    }
+
+    .plan-name {
+      font-weight: 700;
+      color: #1677ff;
+    }
+
+    .price {
+      float: right;
+      font-weight: 700;
+    }
+
+    button {
+      width: 100%;
+      border: none;
+      background: #1677ff;
+      color: white;
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 22px;
+    }
+
+    button:hover {
+      background: #075dcc;
+    }
+
+    button:disabled {
+      background: #9bbff0;
+      cursor: not-allowed;
+    }
+
+    .message {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 9px;
+      display: none;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .error {
+      background: #ffe8e8;
+      color: #b42318;
+    }
+
+    .success {
+      background: #e7f8ee;
+      color: #087443;
+    }
+
+    .login {
+      text-align: center;
+      margin-top: 18px;
+      color: #667085;
+    }
+
+    .login a {
+      color: #1677ff;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .note {
+      font-size: 12px;
+      color: #667085;
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="logo">NOVA RISE ACADEMY</div>
+    <div class="subtitle">Create your member account</div>
+
+    <div class="card">
+
+      <h2>Create Account</h2>
+
+      <form id="registerForm">
+
+        <label>Full Name</label>
+        <input
+          type="text"
+          id="fullName"
+          placeholder="Enter your full name"
+          required
+        >
+
+        <label>Gmail</label>
+        <input
+          type="email"
+          id="email"
+          placeholder="example@gmail.com"
+          required
+        >
+
+        <label>Mobile Number</label>
+        <input
+          type="tel"
+          id="mobile"
+          placeholder="Enter mobile number"
+          maxlength="10"
+          required
+        >
+
+        <label>Password</label>
+        <input
+          type="password"
+          id="password"
+          placeholder="Create password"
+          minlength="6"
+          required
+        >
+
+        <label>Confirm Password</label>
+        <input
+          type="password"
+          id="confirmPassword"
+          placeholder="Confirm password"
+          minlength="6"
+          required
+        >
+
+        <label>Referral Code / Referrer ID</label>
+        <input
+          type="text"
+          id="referralCode"
+          placeholder="Example: NRA-XXXXXX"
+        >
+
+        <div class="note">
+          Referral code optional hai. Agar kisi member ne refer kiya hai,
+          to uska referral code enter karein.
+        </div>
+
+        <label>Select Membership Plan</label>
+
+        <div class="plans">
+
+          <label class="plan">
+            <input
+              type="radio"
+              name="plan"
+              value="basic"
+              data-price="349"
+              required
+            >
+            <span class="plan-name">BASIC</span>
+            <span class="price">₹349</span>
+          </label>
+
+          <label class="plan">
+            <input
+              type="radio"
+              name="plan"
+              value="special"
+              data-price="849"
+            >
+            <span class="plan-name">SPECIAL</span>
+            <span class="price">₹849</span>
+          </label>
+
+          <label class="plan">
+            <input
+              type="radio"
+              name="plan"
+              value="premium"
+              data-price="1279"
+            >
+            <span class="plan-name">PREMIUM</span>
+            <span class="price">₹1,279</span>
+          </label>
+
+        </div>
+
+        <button type="submit" id="registerBtn">
+          Create Account
+        </button>
+
+        <div id="message" class="message"></div>
+
+      </form>
+
+      <div class="login">
+        Already have an account?
+        <a href="login.html">Login</a>
+      </div>
+
+    </div>
+
+  </div>
+
+<script>
+
+  /* =========================================
+     SUPABASE CONFIG
+     ========================================= */
+
+  const SUPABASE_URL = "https://scdkjcckoxerwjsvjxxu.supabase.co";
+
+  const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_w3RCkBMXOYEQ7vhe7fKB0A_E3V1KDEi"
+
+  const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+
+
+  /* =========================================
+     FORM
+     ========================================= */
+
+  const form = document.getElementById("registerForm");
+  const button = document.getElementById("registerBtn");
+  const message = document.getElementById("message");
+
+
+  function showMessage(text, type) {
+
+    message.textContent = text;
+    message.className = "message " + type;
+    message.style.display = "block";
+
+  }
+
+
+  form.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    message.style.display = "none";
+
+    const fullName =
+      document.getElementById("fullName").value.trim();
+
+    const email =
+      document.getElementById("email").value.trim().toLowerCase();
+
+    const mobile =
+      document.getElementById("mobile").value.trim();
+
+    const password =
+      document.getElementById("password").value;
+
+    const confirmPassword =
+      document.getElementById("confirmPassword").value;
+
+    const referralCode =
+      document.getElementById("referralCode").value.trim();
+
+    const selectedPlan =
+      document.querySelector('input[name="plan"]:checked');
+
+
+    /* =========================================
+       VALIDATION
+       ========================================= */
+
+    if (!selectedPlan) {
+      showMessage("Please select a membership plan.", "error");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      showMessage("Passwords do not match.", "error");
+      return;
+    }
+
+    if (mobile.length !== 10 || !/^[0-9]+$/.test(mobile)) {
+      showMessage("Please enter a valid 10-digit mobile number.", "error");
+      return;
+    }
+
+    if (!email.endsWith("@gmail.com")) {
+      showMessage("Please use a Gmail address.", "error");
+      return;
+    }
+
+
+    const plan = selectedPlan.value;
+    const amount = Number(selectedPlan.dataset.price);
+
+
+    button.disabled = true;
+    button.textContent = "Creating Account...";
+
+
+    try {
+
+      /* =========================================
+         SUPABASE AUTH SIGNUP
+         ========================================= */
+
+      const { data, error } =
+        await supabaseClient.auth.signUp({
+
+          email: email,
+
+          password: password,
+
+          options: {
+            data: {
+              full_name: fullName,
+              mobile: mobile,
+              referral_code: referralCode,
+              membership_plan: plan,
+              membership_amount: amount
+            }
+          }
+
+        });
+
+
+      if (error) {
+        throw error;
+      }
+
+
+      /* =========================================
+         ACCOUNT CREATED
+         ========================================= */
+
+      showMessage(
+        "Account created successfully. Please check your email if verification is required.",
+        "success"
+      );
+
+
+      setTimeout(function() {
+
+        window.location.href = "pending.html";
+
+      }, 2500);
+
+
+    } catch (error) {
+
+      console.error(error);
+
+      showMessage(
+        error.message || "Registration failed. Please try again.",
+        "error"
+      );
+
+      button.disabled = false;
+      button.textContent = "Create Account";
+
+    }
+
+  });
+
+</script>
+
+</body>
+</html>
